@@ -1,0 +1,111 @@
+_schema-version: "3.2"
+ID: shopping-cart
+version: 0.0.1
+modules:
+- name: shopping-workflow
+  type: com.sap.application.content
+  path: shopping-workflow
+  requires:
+  - name: workflow
+    parameters:
+      content-target: true
+- name: shopping-cart-destination-content
+  type: com.sap.application.content
+  requires:
+  - name: shopping-cart-destination-service
+    parameters:
+      content-target: true
+  - name: shopping-cart_html_repo_host
+    parameters:
+      service-key:
+        name: shopping-cart_html_repo_host-key
+  - name: uaa_shopping-cart
+    parameters:
+      service-key:
+        name: uaa_shopping-cart-key
+  parameters:
+    content:
+      subaccount:
+        destinations:
+        - Name: custom__shopping_cart_html_repo_host
+          ServiceInstanceName: shopping-cart-html5-app-host-service
+          ServiceKeyName: shopping-cart_html_repo_host-key
+          sap.cloud.service: custom-
+        - Authentication: OAuth2UserTokenExchange
+          Name: custom__uaa_shopping_cart
+          ServiceInstanceName: shopping-cart-xsuaa-service
+          ServiceKeyName: uaa_shopping-cart-key
+          sap.cloud.service: custom-
+        existing_destinations_policy: ignore
+  build-parameters:
+    no-source: true
+- name: shopping-cart-app-content
+  type: com.sap.application.content
+  path: .
+  requires:
+  - name: shopping-cart_html_repo_host
+    parameters:
+      content-target: true
+  build-parameters:
+    build-result: resources
+    requires:
+    - artifacts:
+      - atsshopworkflowuimodule.zip
+      name: atsshopworkflowuimodule
+      target-path: resources/
+- name: atsshopworkflowuimodule
+  type: html5
+  path: workflow-ui-module
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: workflow-reuse
+  type: com.sap.application.content
+  path: workflow-reuse
+  requires:
+  - name: workflow
+    parameters:
+      content-target: true
+resources:
+- name: workflow
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: workflow
+    service-plan: lite
+- name: shopping-cart-destination-service
+  type: org.cloudfoundry.managed-service
+  parameters:
+    config:
+      HTML5Runtime_enabled: true
+      init_data:
+        subaccount:
+          destinations:
+          - Authentication: NoAuthentication
+            Name: ui5
+            ProxyType: Internet
+            Type: HTTP
+            URL: https://ui5.sap.com
+          existing_destinations_policy: update
+      version: 1.0.0
+    service: destination
+    service-name: shopping-cart-destination-service
+    service-plan: lite
+- name: shopping-cart_html_repo_host
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-name: shopping-cart-html5-app-host-service
+    service-plan: app-host
+- name: uaa_shopping-cart
+  type: org.cloudfoundry.managed-service
+  parameters:
+    path: ./xs-security.json
+    service: xsuaa
+    service-name: shopping-cart-xsuaa-service
+    service-plan: application
+parameters:
+  deploy_mode: html5-repo

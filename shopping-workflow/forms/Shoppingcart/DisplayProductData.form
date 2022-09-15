@@ -1,0 +1,52 @@
+{
+    "id": "displayproductdata",
+    "schemaVersion": "1.1.0",
+    "name": "DisplayProductData",
+    "revision": "1.0",
+    "type": "task",
+    "readOnly": false,
+    "content": [
+        {
+            "id": "product_id",
+            "type": "string",
+            "label": "Product Id",
+            "readOnly": true,
+            "value": "${context.response.d.Id}",
+            "constraints": {
+                "required": false
+            }
+        },
+        {
+            "id": "product_id_1",
+            "type": "string",
+            "label": "Name",
+            "readOnly": true,
+            "value": "${context.response.d.Name}",
+            "constraints": {
+                "required": false
+            }
+        },
+        {
+            "id": "product_id_2",
+            "type": "string",
+            "label": "Price",
+            "readOnly": true,
+            "value": "${context.response.d.Price}",
+            "constraints": {
+                "required": false
+            }
+        }
+    ],
+    "decisions": [
+        {
+            "id": "approve",
+            "text": "Approve",
+            "decisionType": "positive"
+        },
+        {
+            "id": "reject",
+            "text": "Reject",
+            "decisionType": "negative"
+        }
+    ]
+}
