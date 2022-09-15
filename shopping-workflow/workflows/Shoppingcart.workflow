@@ -5,7 +5,7 @@
 			"id": "ats.shop.shoppingcart",
 			"subject": "Shoppingcart",
 			"name": "Shoppingcart",
-			"documentation": "Shopping Cart approval workflow",
+			"documentation": "Shopping Cart approval workflow ss",
 			"lastIds": "62d7f4ed-4063-4c44-af8b-39050bd44926",
 			"events": {
 				"11a9b5ee-17c0-4159-9bbf-454dcfdcd5c3": {
@@ -23,7 +23,7 @@
 					"name": "FetchProductDetails"
 				},
 				"495626f7-a9ea-4fc0-bba0-9f8b039a4642": {
-					"name": "CheckPrice"
+					"name": "CheckPrices"
 				},
 				"7a05adf5-d5af-4945-b705-84916d1d4178": {
 					"name": "ExclusiveGateway1"
@@ -103,7 +103,7 @@
 			"classDefinition": "com.sap.bpm.wfs.ScriptTask",
 			"reference": "/scripts/Shoppingcart/CheckAutoApproval.js",
 			"id": "scripttask1",
-			"name": "CheckPrice",
+			"name": "CheckPrices",
 			"documentation": "Check price and set flag"
 		},
 		"7a05adf5-d5af-4945-b705-84916d1d4178": {
