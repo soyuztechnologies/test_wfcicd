@@ -3,7 +3,7 @@
 		"1c16c436-e0ba-4f32-a9ab-6303593c0685": {
 			"classDefinition": "com.sap.bpm.wfs.Model",
 			"id": "ats.shop.shoppingcart",
-			"subject": "Shoppingcarts",
+			"subject": "Shoppingcart",
 			"name": "Shoppingcart",
 			"documentation": "Shopping Cart approval workflow ss",
 			"lastIds": "62d7f4ed-4063-4c44-af8b-39050bd44926",
